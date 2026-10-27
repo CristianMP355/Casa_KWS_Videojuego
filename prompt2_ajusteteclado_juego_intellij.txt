@@ -1,0 +1,30 @@
+
+
+Aplica una refactorización de interfaz en el proyecto Java para ocultar todas las referencias al teclado y simulación, manteniendo el control por teclado activo en segundo plano como respaldo sigiloso para la presentación:
+
+---
+
+### 1. OCULTAR ELEMENTOS DEL HEADER (`MainDashboardUI.java`)
+- Elimina o quita de la vista el interruptor de toggle "Modo Simulación por Teclado" y el texto "Teclado ACTIVO".
+- Reemplázalo por un indicador discreto o de estado BLE como: `🎤 Micrófono KWS // BLE Conectado` o `Estado del Sistema: ESCUCHANDO`.
+- Haz que la captura de eventos de teclado (`KeyController`) quede **siempre habilitada por defecto en segundo plano** sin requerir un switch activo.
+
+---
+
+### 2. TARJETAS DE EMERGENCIA Y PLANO 2D (`GamePanel.java` / `HousePlanPanel.java`)
+- **Tarjetas de Emergencia en tiempo real:**
+  - Cambia el texto `Responde: "Alarma" · tecla [A]` por únicamente `Comando vocal requerido: "ALARMA"`.
+- **Plano 2D de la Casa:**
+  - Elimina los subtítulos que muestran la tecla física (ej. quitar `Tecla [P]`, `Tecla [G]`, `Tecla [V]`, `Tecla [T]`, `Tecla [A]`). Deja únicamente el nombre del sector y su estado (`SEGURA` / `INTRUSIÓN`).
+
+---
+
+### 3. CONSOLA TERMINAL DE EVENTOS (`EventLogPanel.java` / `GameEngine.java`)
+- Cambia los registros de eventos cuando se presione una tecla:
+  - En lugar de registrar `TECLA Tecla [V] -> VENTANAS`, debe registrar `VOZ Comando "VENTANAS" procesado`.
+  - En lugar de `Anomalía por tecla [X]`, debe registrar `KWS [ANOMALÍA DETECTADA] -> Descongelando monitores`.
+- Elimina del historial cualquier mensaje de inicio que diga `Modo Simulación por Teclado ACTIVADO`.
+
+---
+
+Reescribe/actualiza los archivos necesarios en `src/main/java/com/casasegura/` y asegúrate de que compilen correctamente.

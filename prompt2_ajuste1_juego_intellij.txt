@@ -1,0 +1,32 @@
+Realiza una refactorización en el proyecto Java para aplicar los siguientes dos cambios visuales y de jugabilidad:
+
+---
+
+### 1. TIEMPOS DE RESPUESTA (10 SEGUNDOS)
+- Modifica `GameEngine.java` para que el tiempo base de respuesta para resolver cualquier amenaza/intrusión sea de **10.0 segundos** (Nivel 1: 10.0s, Nivel 2: 8.0s, Nivel 3: 6.0s). Esto permite que la inferencia de audio del Arduino Nano 33 BLE se procese y transmita sin carreras de tiempo.
+
+---
+
+### 2. REDISEÑO DEL PLANO 2D DE LA CASA (`HousePlanPanel.java` / `MainDashboardUI.java`)
+Rediseña la pestaña "Plano 2D de la Casa" para que coincida exactamente con la maqueta arquitectónica previa:
+
+- **Panel Izquierdo (Plano de la Casa Blueprint):**
+  - Dibuja la distribución arquitectónica con divisiones claras por sectores:
+    - `HABITACIÓN` (Zona Ventanas)
+    - `COCINA / COMEDOR` (Zona Alarma / TV)
+    - `SALA` (Zona Puerta Principal)
+    - `GARAJE` (Zona Portón Vehicular)
+  - **Efecto de Alerta Roja:** Cuando un sector sufra una intrusión o anomalía activa, el contorno y el fondo del área deben cambiar a un **rojo neón intenso parpadeante** con el texto en rojo `¡INTRUSIÓN EN CURSO!`. Cuando el sector esté a salvo, se mantendrá en cyan/verde con la etiqueta `SEGURO / OK`.
+
+- **Panel Derecho ("ESTADO DE DISPOSITIVOS"):**
+  - Crea una columna lateral que enumere las 5 zonas de seguridad con tarjetas gráficas individuales:
+    - **ALARMA:** `ACTIVADA` (Rojo) / `DESACTIVADA` (Verde)
+    - **GARAJE:** `ABIERTO` (Rojo) / `CERRADO` (Verde)
+    - **PUERTA:** `DESBLOQUEADA` (Rojo) / `BLOQUEADA` (Verde)
+    - **TELEVISOR:** `FALLA CC` (Rojo) / `OK` (Verde)
+    - **VENTANAS:** `ABIERTAS` (Rojo) / `PROTEGIDAS` (Verde)
+  - Muestra un porcentaje de confianza emulado o estado en tiempo real en cada tarjeta.
+
+---
+
+Reescribe/actualiza los archivos necesarios en `src/main/java/com/casasegura/` garantizando que compilen sin errores.

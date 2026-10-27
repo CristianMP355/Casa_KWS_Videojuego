@@ -1,0 +1,32 @@
+# ---- Java / Maven ----
+target/
+*.class
+*.jar
+*.war
+*.log
+hs_err_pid*
+
+# ---- IntelliJ IDEA ----
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# ---- Datos generados por el juego ----
+highscore_casa_segura.json
+
+# ---- Sistema operativo ----
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.swp
+*~

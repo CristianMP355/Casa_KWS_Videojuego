@@ -1,0 +1,62 @@
+
+
+Actúa como Desarrollador Senior de Software Java especializado en Motores de Juego e Interfaces Gráficas Avanzadas.
+
+Crea un proyecto completo en Java estructurado para IntelliJ IDEA utilizando Maven en la subcarpeta actual:
+`C:\Users\Cristian Piedrahita\Desktop\IA EN DISPO. MOBILES Y EMBE\2 CORTE\JUEGO_INTELLIJ`
+
+El proyecto se titula "Casa Segura - Smart Home KWS Dashboard & Game Engine".
+
+---
+
+### 1. CONFIGURACIÓN MAVEN (`pom.xml`)
+Genera un archivo `pom.xml` válido con Java 17+ que incluya las siguientes dependencias:
+- `com.fazecast:jSerialComm:2.10.3` (Para la lectura del puerto Serie a 115200 baudios en hilo separado).
+- `com.formdev:flatlaf:3.2` (Para la interfaz gráfica estilo Cyberpunk / Dark Mode).
+- `com.google.code.gson:gson:2.10.1` (Para la persistencia del High Score).
+
+Crea la estructura estándar de directorios: `src/main/java/com/casasegura/`.
+
+---
+
+### 2. ARQUITECTURA DE CLASES JAVA
+
+Escribe las siguientes clases en `src/main/java/com/casasegura/`:
+
+1. **`Main.java`**:
+   - Punto de entrada (`public static void main`). Configura FlatLaf Dark LookAndFeel e inicia la ventana principal `MainDashboardUI`.
+
+2. **`ArduinoSerialService.java`**:
+   - Servicio de comunicación en un hilo secundario (`Thread`).
+   - Parsea con Expresiones Regulares (Regex) las siguientes cadenas enviadas por la placa Arduino Nano 33 BLE Sense:
+     - `✅ [COMANDO DETECTADO]: ALARMA  --> Confianza: 99.6%`
+     - `✅ [COMANDO DETECTADO]: GARAJE  --> Confianza: 78.4%`
+     - `✅ [COMANDO DETECTADO]: PUERTA  --> Confianza: 97.7%`
+     - `✅ [COMANDO DETECTADO]: TELEVISOR  --> Confianza: 85.5%`
+     - `✅ [COMANDO DETECTADO]: VENTANAS  --> Confianza: 92.6%`
+     - `⚠️  [ANOMALÍA DETECTADA]: Score: 2.15`
+     - `🔊 [RUIDO AMBIENTE]: Sin comandos vocales`
+
+3. **`GameEngine.java` (SISTEMA DE ALTA DIFICULTAD Y MULTI-AMENAZAS)**:
+   - **Amenazas Múltiples Simultáneas:** Permite que 2 o 3 sectores entren en estado de emergencia al mismo tiempo (ej. *"¡Intruso en PUERTA y al mismo tiempo en VENTANAS!"*).
+   - **Dificultad Progresiva Acelerada:**
+     - Nivel 1 (0-500 pts): 1 amenaza a la vez | 5.0 segundos de reacción.
+     - Nivel 2 (500-1200 pts): 2 amenazas a la vez | 3.2 segundos de reacción.
+     - Nivel 3 (1200+ pts): 3 amenazas simultáneas | 1.8 segundos de reacción.
+   - **Penalización por Anomalía:** Si ocurre una `ANOMALÍA` durante el juego, congela/bloquea temporalmente los controles por 1 segundo y resta puntos.
+   - Manejo de Vidas (3 corazones), Rachas de acierto y High Score persistente en JSON.
+
+4. **`MainDashboardUI.java`**:
+   - Ventana principal Swing con FlatLaf Dark Theme.
+   - **Barra Superior:** Selector de puertos COM con `jSerialComm`, botón "Conectar/Desconectar", indicador LED visual y Switch toggle: **"Modo Simulación (Sin Arduino)"**.
+   - **Pestaña 1 - Plano 2D de la Casa:** Representación visual interactiva de los 5 sectores (Alarma, Garaje, Puerta, Televisor, Ventanas) con indicadores luminosos de estado.
+   - **Pestaña 2 - Motor del Juego:** Panel de desafío con barras de progreso regresivas individuales para cada amenaza activa.
+   - **Terminal Log:** Consola de eventos con desplazamiento automático y colores diferidos.
+
+5. **`KeySimulationHandler.java`**:
+   - Cuando el *Modo Simulación* está activo, captura las teclas de acceso rápido (`A`, `G`, `P`, `T`, `V`, `X`, `N`) para probar las amenazas múltiples y la respuesta del juego mediante el teclado.
+
+---
+
+### 3. COMPILACIÓN Y PRUEBA
+Genera archivos limpios, modulados, documentados en español y listos para importar desde IntelliJ IDEA.

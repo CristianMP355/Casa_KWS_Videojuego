@@ -1,0 +1,37 @@
+
+
+Refactoriza la interfaz Swing y la distribución de paneles en el proyecto Java de IntelliJ con los siguientes cambios de diseño y flujo de juego:
+
+---
+
+### 1. PESTAÑA PRINCIPAL ("Plano 2D de la Casa // Centro de Control")
+Reorganiza `MainDashboardUI.java` y `HousePlanPanel.java` para que la pantalla principal contenga todo el bucle del juego en vivo:
+
+- **HUD Superior de Estadísticas:**
+  - Muestra en la parte superior los 4 métricos principales: **PUNTAJE**, **NIVEL**, **VIDAS (❤️)** y **HIGH SCORE** (Se elimina el indicador de Combo).
+  - Incluye la barra de **RIESGO DE SEGURIDAD (0 - 100%)** y los botones de acción **INICIAR TURNO** / **TERMINAR TURNO**.
+
+- **Área Central - Plano 2D Interactivo (Estilo Data Explorer / Canvas Drag):**
+  - Implementa navegación por arrastre de ratón (`MouseListener` y `MouseMotionListener` en `HousePlanPanel`):
+    - Haz que al hacer clic sostenido y arrastrar con el cursor, el mapa de la casa se desplace suavemente en X/Y (`translateX`, `translateY`).
+    - Agrega un indicador visual o botón discreto "Centrar Vista" para resetear la posición del plano si se desplaza demasiado.
+  - Mantiene la animación parpadeante roja neón en los sectores bajo intrusión/anomalía.
+
+- **Panel de Emergencias en Tiempo Real (Tarjetas de Alerta):**
+  - Ubica la tarjeta de **EMERGENCIAS EN TIEMPO REAL** (con el nombre de la alerta, el comando de voz requerido y la barra de tiempo regresivo de 10.0s) dentro de la pestaña principal, justo debajo o al lado del plano 2D.
+
+- **Panel Lateral Derecho ("ESTADO DE DISPOSITIVOS"):**
+  - Muestra las 5 tarjetas dinámicas de los sectores (Alarma, Garaje, Puerta, Televisor, Ventanas) actualizando su estado en tiempo real (`SEGURA` / `INTRUSIÓN EN CURSO`).
+
+---
+
+### 2. PESTAÑA SECUNDARIA ("Consola de Telemetría e Historial")
+Modifica la segunda pestaña para que sirva únicamente como registro histórico y terminal de diagnóstico:
+
+- **Sección Superior:** Tabla de **HISTORIAL DE TURNOS** (Fecha, Puntaje Final, Nivel Alcanzado, Modo de Juego).
+- **Sección Inferior:** **TERMINAL DE EVENTOS** en vivo con timestamp para inspección detallada de comandos procesados y botón para limpiar consola.
+
+---
+
+### 3. INTEGRIDAD Y COMPILACIÓN
+Asegúrate de actualizar los controladores de eventos y bindings de teclado en `KeyController.java` y `GameEngine.java` para que la jugabilidad responda impecablemente desde la pestaña del Plano 2D. Genera código limpio y listo para ejecutar con Shift + F10.
