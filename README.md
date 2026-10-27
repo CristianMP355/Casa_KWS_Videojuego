@@ -55,10 +55,14 @@ dashboard en Java Swing donde se juega.
 
 ### 1. Subir el sketch al Arduino
 
-1. Abre el sketch de KWS en Arduino IDE 2.x. Si el modelo viene de Edge Impulse, primero importa
-   su librería `.zip` en `Sketch > Include Library > Add .ZIP Library...`.
-2. En `Tools > Board` selecciona **Arduino Nano 33 BLE** y elige el puerto COM correspondiente.
-3. Pulsa **Upload**. Al terminar, la placa debe anunciarse por BLE como `CasaSegura_KWS`.
+1. Importa la librería del modelo exportada desde Edge Impulse (`casa-inteligente-kws_inferencing`)
+   en `Sketch > Include Library > Add .ZIP Library...` e instala **ArduinoBLE** desde el
+   Library Manager.
+2. Abre `arduino_kws_ble/arduino_kws_ble.ino` en Arduino IDE 2.x.
+3. En `Tools > Board` selecciona **Arduino Nano 33 BLE** y elige el puerto COM correspondiente.
+4. Pulsa **Upload**. En el *Serial Monitor* (115200 baudios) debe aparecer
+   `BLE listo y transmitiendo como 'CasaSegura_KWS'`. Cada comando detectado enciende un LED:
+   ALARMA rojo, GARAJE verde, PUERTA azul, TELEVISOR amarillo y VENTANAS el LED de la placa.
 
 ### 2. Correr el puente BLE
 
@@ -126,6 +130,8 @@ cualquier pestaña, así que puedes jugar sin el Arduino o usarlas si falla la c
 ## Estructura del Proyecto
 
 ```
+├── arduino_kws_ble/
+│   └── arduino_kws_ble.ino       # Sketch KWS (Edge Impulse) + BLE + LEDs
 ├── bridge_ble.py                 # Puente BLE → teclado
 ├── pom.xml                       # Maven (FlatLaf, Gson)
 └── src/main/java/com/casasegura/
